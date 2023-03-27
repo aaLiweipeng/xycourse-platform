@@ -10,5 +10,10 @@
   },
   "devDependencies": {
     "nuxt": "^3.3.2"
+  },
+  "dependencies": {
+    "@css-render/vue3-ssr": "^0.15.12",
+    "@types/node": "^18.15.10",
+    "naive-ui": "^2.34.3"
   }
 }
