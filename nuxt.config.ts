@@ -2,7 +2,7 @@
  * @Descripttion: 
  * @Author: lwp
  * @Date: 2023-03-28 00:42:47
- * @LastEditTime: 2023-03-28 03:07:08
+ * @LastEditTime: 2023-03-28 23:07:15
  */
 import { defineNuxtConfig } from "nuxt/config";
 
@@ -28,4 +28,5 @@ export default defineNuxtConfig({
     },
   },
   buildModules: ["nuxt-windicss"],
+  modules: ["nuxt-windicss"],
 });

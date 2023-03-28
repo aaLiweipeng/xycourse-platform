@@ -2,11 +2,16 @@
  * @Descripttion: 
  * @Author: lwp
  * @Date: 2023-03-28 00:42:47
- * @LastEditTime: 2023-03-28 02:51:00
+ * @LastEditTime: 2023-03-28 23:09:26
 -->
 <template>
   <div>
-    <n-button type="primary" size="medium">按钮</n-button>
+    <button class="text-purple-600 border !border-purple-600 px-[20px] py-[10px] !rounded-full hover:(bg-purple-600 !text-white);">
+      按钮
+    </button>
+    <button class="btn">
+        按钮
+      </button>
   </div>
 </template>
 
@@ -15,3 +20,9 @@ import {
   NButton
 } from "naive-ui"
 </script>
+
+<style>
+.btn {
+  @apply text-purple-600 border !border-purple-600 px-[20px] py-[10px] !rounded-full hover: (bg-purple-600 !text-white);
+}
+</style>
