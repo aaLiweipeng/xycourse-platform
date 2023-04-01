@@ -2,7 +2,7 @@
  * @Descripttion: 
  * @Author: lwp
  * @Date: 2023-03-28 00:42:47
- * @LastEditTime: 2023-03-28 23:09:26
+ * @LastEditTime: 2023-04-01 23:09:18
 -->
 <template>
   <div>
@@ -16,9 +16,11 @@
 </template>
 
 <script setup>
-import {
-  NButton
-} from "naive-ui"
+// import {
+//   NButton
+// } from "naive-ui"
+
+throw createError({ statusCode: 404, statusMessage: 'Hehehehhe wadiuye!!!!' })
 </script>
 
 <style>
