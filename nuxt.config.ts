@@ -2,12 +2,13 @@
  * @Descripttion: 
  * @Author: lwp
  * @Date: 2023-03-28 00:42:47
- * @LastEditTime: 2023-03-28 23:07:15
+ * @LastEditTime: 2023-04-02 17:32:08
  */
 import { defineNuxtConfig } from "nuxt/config";
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  css: ["@/assets/main.css"],
   build: {
     transpile:
       process.env.NODE_ENV === "production"
