@@ -3,6 +3,6 @@
   max-width: 1140px;
   padding-left: 15px;
   padding-right: 15px;
-  margin-left: auto;
+  margin-left: auto; /* 水平居中 */
   margin-right: auto;
 }
