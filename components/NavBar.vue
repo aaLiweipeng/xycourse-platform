@@ -2,7 +2,7 @@
  * @Descripttion: 导航栏
  * @Author: lwp
  * @Date: 2023-04-02 17:04:01
- * @LastEditTime: 2023-04-04 04:41:14
+ * @LastEditTime: 2023-04-04 05:15:54
 -->
 <template>
   <div class="navbar">
@@ -10,12 +10,22 @@
       <!-- text属性 无边框，文本按钮 -->
       <n-button text class="!text-xl !font-bold">呵呵编程</n-button>
 
-      <div class="menu">
-        <div class="menu-item" v-for="(item, index) in menus" :key="index"
-          :class="{ 'menu-item-active': route.path == item.path }" @click="handleOpen(item.path)">
+      <!-- <div class="menu">
+            <div class="menu-item" v-for="(item, index) in menus" :key="index"
+              :class="{ 'menu-item-active': route.path == item.path }" @click="handleOpen(item.path)">
+              {{ item.name }}
+            </div>
+          </div> -->
+      <ui-menu>
+        <ui-menu-item
+          v-for="(item, index) in menus"
+          :key="index"
+          :active="route.path == item.path"
+          @click="handleOpen(item.path)"
+        >
           {{ item.name }}
-        </div>
-      </div>
+        </ui-menu-item>
+      </ui-menu>
 
       <!-- 这里的marginLeft-auto 用的妙 -->
       <n-button circle class="ml-auto mr-3">
@@ -38,77 +48,74 @@
 </template>
 
 <script setup>
-import { NButton, NIcon, NDropdown, NAvatar } from "naive-ui";
-import { Search } from "@vicons/ionicons5";
-import {
-  PersonCircleOutline as UserIcon,
-  LogOutOutline as LogoutIcon,
-} from "@vicons/ionicons5";
+import { NButton, NIcon, NDropdown, NAvatar } from 'naive-ui'
+import { Search } from '@vicons/ionicons5'
+import { PersonCircleOutline as UserIcon, LogOutOutline as LogoutIcon } from '@vicons/ionicons5'
 
 // h函数加载icon
 const renderIcon = (icon) => {
   return () => {
     return h(NIcon, null, {
-      default: () => h(icon),
-    });
-  };
-};
+      default: () => h(icon)
+    })
+  }
+}
 
-const route = useRoute();
+const route = useRoute()
 const menus = [
   {
-    name: "首页",
-    path: "/",
+    name: '首页',
+    path: '/'
   },
   {
-    name: "考试",
-    path: "/paper/1", // url/分页
+    name: '考试',
+    path: '/paper/1' // url/分页
   },
   {
-    name: "拼团",
-    path: "/list/group/1", // url/公共列表类型/分页
+    name: '拼团',
+    path: '/list/group/1' // url/公共列表类型/分页
   },
   {
-    name: "秒杀",
-    path: "/list/flashsale/1",
+    name: '秒杀',
+    path: '/list/flashsale/1'
   },
   {
-    name: "直播",
-    path: "/list/live/1",
+    name: '直播',
+    path: '/list/live/1'
   },
   {
-    name: "专栏",
-    path: "/list/column/1",
+    name: '专栏',
+    path: '/list/column/1'
   },
   {
-    name: "电子书",
-    path: "/list/book/1",
+    name: '电子书',
+    path: '/list/book/1'
   },
   {
-    name: "社区",
-    path: "/bbs/0/1", // url/社区id/分页
+    name: '社区',
+    path: '/bbs/0/1' // url/社区id/分页
   },
   {
-    name: "课程",
-    path: "/list/course/1",
-  },
-];
+    name: '课程',
+    path: '/list/course/1'
+  }
+]
 function handleOpen(path) {
-  navigateTo(path);
+  navigateTo(path)
 }
 // NavBar右侧icon 下拉菜单选项
 const userOptions = [
   {
-    label: "用户中心",
-    key: "center",
-    icon: renderIcon(UserIcon),
+    label: '用户中心',
+    key: 'center',
+    icon: renderIcon(UserIcon)
   },
   {
-    label: "退出",
-    key: "logout",
-    icon: renderIcon(LogoutIcon),
-  },
-];
+    label: '退出',
+    key: 'logout',
+    icon: renderIcon(LogoutIcon)
+  }
+]
 </script>
 
 <style>
