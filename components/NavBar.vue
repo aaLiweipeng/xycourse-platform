@@ -2,7 +2,7 @@
  * @Descripttion: 导航栏
  * @Author: lwp
  * @Date: 2023-04-02 17:04:01
- * @LastEditTime: 2023-04-04 05:15:54
+ * @LastEditTime: 2023-04-04 05:30:15
 -->
 <template>
   <div class="navbar">
