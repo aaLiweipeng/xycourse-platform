@@ -1,8 +1,14 @@
 <!--
+ * @Descripttion:
+ * @Author: lwp
+ * @Date: 2023-04-04 05:28:51
+ * @LastEditTime: 2023-04-05 20:02:37
+-->
+<!--
  * @Descripttion: 导航栏
  * @Author: lwp
  * @Date: 2023-04-02 17:04:01
- * @LastEditTime: 2023-04-04 05:30:15
+ * @LastEditTime: 2023-04-05 03:40:22
 -->
 <template>
   <div class="navbar">
@@ -20,7 +26,7 @@
         <ui-menu-item
           v-for="(item, index) in menus"
           :key="index"
-          :active="route.path == item.path"
+          :active="isMenuItemActive(item)"
           @click="handleOpen(item.path)"
         >
           {{ item.name }}
@@ -49,8 +55,7 @@
 
 <script setup>
 import { NButton, NIcon, NDropdown, NAvatar } from 'naive-ui'
-import { Search } from '@vicons/ionicons5'
-import { PersonCircleOutline as UserIcon, LogOutOutline as LogoutIcon } from '@vicons/ionicons5'
+import { Search, PersonCircleOutline as UserIcon, LogOutOutline as LogoutIcon } from '@vicons/ionicons5'
 
 // h函数加载icon
 const renderIcon = (icon) => {
@@ -62,47 +67,109 @@ const renderIcon = (icon) => {
 }
 
 const route = useRoute()
-const menus = [
-  {
-    name: '首页',
-    path: '/'
-  },
-  {
-    name: '考试',
-    path: '/paper/1' // url/分页
-  },
-  {
-    name: '拼团',
-    path: '/list/group/1' // url/公共列表类型/分页
-  },
-  {
-    name: '秒杀',
-    path: '/list/flashsale/1'
-  },
-  {
-    name: '直播',
-    path: '/list/live/1'
-  },
-  {
-    name: '专栏',
-    path: '/list/column/1'
-  },
-  {
-    name: '电子书',
-    path: '/list/book/1'
-  },
-  {
-    name: '社区',
-    path: '/bbs/0/1' // url/社区id/分页
-  },
-  {
-    name: '课程',
-    path: '/list/course/1'
-  }
-]
-function handleOpen(path) {
+const menus = [{
+    name:"首页",
+    path:"/"
+},{
+    name:"考试",
+    path:"/paper/1",
+    match:[{
+        name:"paper-page"
+    }]
+},{
+    name:"拼团",
+    path:"/list/group/1",
+    match:[{
+        name:"list-type-page",
+        params:{
+            type:"group"
+        }
+    }]
+},{
+    name:"秒杀",
+    path:"/list/flashsale/1",
+    match:[{
+        name:"list-type-page",
+        params:{
+            type:"flashsale"
+        }
+    }]
+},{
+    name:"直播",
+    path:"/list/live/1",
+    match:[{
+        name:"list-type-page",
+        params:{
+            type:"live"
+        }
+    }]
+},{
+    name:"专栏",
+    path:"/list/column/1",
+    match:[{
+        name:"list-type-page",
+        params:{
+            type:"column"
+        }
+    }]
+},{
+    name:"电子书",
+    path:"/list/book/1",
+    match:[{
+        name:"list-type-page",
+        params:{
+            type:"book"
+        }
+    }]
+},{
+    name:"社区",
+    path:"/bbs/0/1",
+    match:[{
+        name:"bbs-bbs_id-page"
+    }]
+},{
+    name:"课程",
+    path:"/list/course/1",
+    match:[{
+        name:"list-type-page",
+        params:{
+            type:"course"
+        }
+    }]
+}]
+
+function handleOpen (path) {
   navigateTo(path)
 }
+
+// 三层比较 —— path、name、params，要遍历到底，比较最低的一层的值
+const isMenuItemActive = (item) => {
+  if (item.match) {
+    // 遍历 match数组
+    const i = item.match.findIndex(el => {
+      // 如有有match.name 没有 match.params，
+      // 如【paper-page】, 那就不比params，直接判断name
+      let res = true
+
+      // 如菜单项元素有 params字段，那需要比较 params字段值 跟 当前路由的params字段值
+      if (el.params && typeof el.params == 'object') {
+        // 遍历 params字段的key， 
+        // 取params下 每个key对应值 跟 route的params对应key的值对比, 
+        // 找到则返回真值, 找不到 就-1了，那接  != -1 就是false了
+        res = (Object.keys(el.params).findIndex(key => route.params[key] == el.params[key])) != -1
+      }
+
+      // 如果当前元素的的match.name 跟 当前路由的name一样 且（如有params参数，params值也相同）
+      return el.name === route.name && res
+    })
+    return i !== -1 // 不为 -1 就是找到符合的元素了
+  }
+
+  // 有写match的，用match匹配规则去匹配；
+  // 没写match的，直接用path元素字段 匹配 当前路由路径
+  return route.path == item.path
+}
+
 // NavBar右侧icon 下拉菜单选项
 const userOptions = [
   {
