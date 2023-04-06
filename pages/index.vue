@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-02 00:14:09
- * @LastEditTime: 2023-04-07 03:14:27
+ * @LastEditTime: 2023-04-07 03:55:45
 -->
 <template>
   <div>
@@ -16,6 +16,7 @@
         <Banner :data="item.data" v-if="item.type == 'swiper'" />
         <ImageNav :data="item.data" v-else-if="item.type == 'icons'"/>
         <ImageAd :data="item.data" v-else-if="item.type == 'imageAd'"/>
+        <ListCard :title="item.title" :data="item.data" v-else-if="item.type == 'list'" />
       </template>
     </template>
   </div>
