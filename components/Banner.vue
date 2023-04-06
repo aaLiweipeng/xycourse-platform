@@ -1,8 +1,8 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-06 03:38:50
- * @LastEditTime: 2023-04-06 03:44:18
+ * @LastEditTime: 2023-04-07 02:49:37
 -->
 <template>
   <n-carousel show-arrow class="mb-6">
@@ -11,7 +11,7 @@
       :key="index"
       class="carousel-img rounded cursor-pointer"
       :src="item.src"
-      @click="open(item)"
+      @click="commonOpen(item)"
     />
   </n-carousel>
 </template>
@@ -22,12 +22,6 @@ import { NCarousel } from 'naive-ui'
 defineProps({
   data: Array
 })
-
-const open = (item) => {
-  if (item.type == 'webview') {
-    window.open(item.url)
-  }
-}
 </script>
 
 <style scoped>

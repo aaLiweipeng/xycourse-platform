@@ -1,10 +1,4 @@
 <!--
- * @Descripttion:
- * @Author: lwp
- * @Date: 2023-04-04 05:28:51
- * @LastEditTime: 2023-04-05 20:02:37
--->
-<!--
  * @Descripttion: 导航栏
  * @Author: lwp
  * @Date: 2023-04-02 17:04:01
@@ -68,74 +62,74 @@ const renderIcon = (icon) => {
 
 const route = useRoute()
 const menus = [{
-    name:"首页",
-    path:"/"
-},{
-    name:"考试",
-    path:"/paper/1",
-    match:[{
-        name:"paper-page"
-    }]
-},{
-    name:"拼团",
-    path:"/list/group/1",
-    match:[{
-        name:"list-type-page",
-        params:{
-            type:"group"
-        }
-    }]
-},{
-    name:"秒杀",
-    path:"/list/flashsale/1",
-    match:[{
-        name:"list-type-page",
-        params:{
-            type:"flashsale"
-        }
-    }]
-},{
-    name:"直播",
-    path:"/list/live/1",
-    match:[{
-        name:"list-type-page",
-        params:{
-            type:"live"
-        }
-    }]
-},{
-    name:"专栏",
-    path:"/list/column/1",
-    match:[{
-        name:"list-type-page",
-        params:{
-            type:"column"
-        }
-    }]
-},{
-    name:"电子书",
-    path:"/list/book/1",
-    match:[{
-        name:"list-type-page",
-        params:{
-            type:"book"
-        }
-    }]
-},{
-    name:"社区",
-    path:"/bbs/0/1",
-    match:[{
-        name:"bbs-bbs_id-page"
-    }]
-},{
-    name:"课程",
-    path:"/list/course/1",
-    match:[{
-        name:"list-type-page",
-        params:{
-            type:"course"
-        }
-    }]
+  name: '首页',
+  path: '/'
+}, {
+  name: '考试',
+  path: '/paper/1',
+  match: [{
+    name: 'paper-page'
+  }]
+}, {
+  name: '拼团',
+  path: '/list/group/1',
+  match: [{
+    name: 'list-type-page',
+    params: {
+      type: 'group'
+    }
+  }]
+}, {
+  name: '秒杀',
+  path: '/list/flashsale/1',
+  match: [{
+    name: 'list-type-page',
+    params: {
+      type: 'flashsale'
+    }
+  }]
+}, {
+  name: '直播',
+  path: '/list/live/1',
+  match: [{
+    name: 'list-type-page',
+    params: {
+      type: 'live'
+    }
+  }]
+}, {
+  name: '专栏',
+  path: '/list/column/1',
+  match: [{
+    name: 'list-type-page',
+    params: {
+      type: 'column'
+    }
+  }]
+}, {
+  name: '电子书',
+  path: '/list/book/1',
+  match: [{
+    name: 'list-type-page',
+    params: {
+      type: 'book'
+    }
+  }]
+}, {
+  name: '社区',
+  path: '/bbs/0/1',
+  match: [{
+    name: 'bbs-bbs_id-page'
+  }]
+}, {
+  name: '课程',
+  path: '/list/course/1',
+  match: [{
+    name: 'list-type-page',
+    params: {
+      type: 'course'
+    }
+  }]
 }]
 
 function handleOpen (path) {
@@ -153,8 +147,8 @@ const isMenuItemActive = (item) => {
 
       // 如菜单项元素有 params字段，那需要比较 params字段值 跟 当前路由的params字段值
       if (el.params && typeof el.params == 'object') {
-        // 遍历 params字段的key， 
-        // 取params下 每个key对应值 跟 route的params对应key的值对比, 
+        // 遍历 params字段的key，
+        // 取params下 每个key对应值 跟 route的params对应key的值对比,
         // 找到则返回真值, 找不到 就-1了，那接  != -1 就是false了
         res = (Object.keys(el.params).findIndex(key => route.params[key] == el.params[key])) != -1
       }
