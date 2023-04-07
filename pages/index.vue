@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-02 00:14:09
- * @LastEditTime: 2023-04-08 02:50:51
+ * @LastEditTime: 2023-04-08 04:24:53
 -->
 <template>
   <div>
@@ -15,9 +15,11 @@
       <!-- 类似于RecycleView的多布局加载，每个data item来到这里，就根据item.type去加载不同类型的布局！ -->
       <template v-for="(item, index) in data" :key="index">
         <Banner :data="item.data" v-if="item.type == 'swiper'" />
-        <ImageNav :data="item.data" v-else-if="item.type == 'icons'"/>
-        <ImageAd :data="item.data" v-else-if="item.type == 'imageAd'"/>
+        <ImageNav :data="item.data" v-else-if="item.type == 'icons'" />
+        <ImageAd :data="item.data" v-else-if="item.type == 'imageAd'" />
         <ListCard :title="item.title" :data="item.data" v-else-if="item.type == 'list'" />
+        <!-- 拼团 -->
+        <ListCard :title="item.title" :type="item.listType" :data="item.data" v-else-if="item.type == 'promotion'" />
       </template>
     </template>
   </div>
