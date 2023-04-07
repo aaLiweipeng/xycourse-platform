@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-07 03:56:09
- * @LastEditTime: 2023-04-07 04:22:54
+ * @LastEditTime: 2023-04-08 03:22:23
 -->
 <template>
   <!-- 卡片 -->
@@ -17,7 +17,10 @@
       <!-- truncate 处理文本溢出    font-semibold 加粗 -->
       <span class="font-bold w-full truncate font-semibold">{{ item.title }}</span>
     </div>
-    <div class="mt-2 flex">价格</div>
+    <div class="mt-2 flex items-end">
+      <Price :value="item.price" />
+      <Price :value="item.t_price" through class="ml-2" />
+    </div>
   </n-card>
 </template>
 

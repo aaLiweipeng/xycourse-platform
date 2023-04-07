@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-02 00:14:09
- * @LastEditTime: 2023-04-07 03:55:45
+ * @LastEditTime: 2023-04-08 02:50:51
 -->
 <template>
   <div>
@@ -12,6 +12,7 @@
     <!-- 过了加载态、错误态。接下 就是正常内容渲染了 -->
     <template v-else>
       <!-- 第一层data下有很多种类型的数据，遍历【v-for】到 swiper类型那个data，才给渲染【v-if】 -->
+      <!-- 类似于RecycleView的多布局加载，每个data item来到这里，就根据item.type去加载不同类型的布局！ -->
       <template v-for="(item, index) in data" :key="index">
         <Banner :data="item.data" v-if="item.type == 'swiper'" />
         <ImageNav :data="item.data" v-else-if="item.type == 'icons'"/>
