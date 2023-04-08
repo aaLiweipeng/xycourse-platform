@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-02 00:14:09
- * @LastEditTime: 2023-04-08 04:24:53
+ * @LastEditTime: 2023-04-08 21:57:02
 -->
 <template>
   <div>
@@ -26,7 +26,17 @@
 </template>
 
 <script setup>
-const { pending, data, refresh, error } = await useFetch('/index', {
+
+useHead({
+  title: '呵呵编程首页',
+  meta: [
+    { name: 'description', content: '首页描述' },
+    { name: 'keywords', content: '首页关键词' }
+  ]
+})
+
+// const { pending, data, refresh, error } = await useFetch('/index', {
+const { pending, data, error } = await useFetch('/index', {
   key: 'IndexData',
   baseURL: 'http://demonuxtapi.dishait.cn/pc',
   headers: {
