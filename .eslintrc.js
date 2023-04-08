@@ -19,6 +19,7 @@ module.exports = {
   rules: {
     'no-undef': 0,
     eqeqeq: 0,
-    'vue/multi-word-component-names': 0
+    'vue/multi-word-component-names': 0,
+    'space-before-function-paren': 0
   }
 }

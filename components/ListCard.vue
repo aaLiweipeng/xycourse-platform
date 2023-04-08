@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-07 03:56:01
- * @LastEditTime: 2023-04-08 04:29:26
+ * @LastEditTime: 2023-04-09 00:45:53
 -->
 <template>
   <div>
@@ -38,18 +38,10 @@ const props = defineProps({
 const pdata = ref(props.data || [])
 if (props.type === 'group') {
   // 如果是拼团，进入下一步请求   limit=8 取前8个
-  const { data } = await useFetch('/group/list?page=1&usable=1&limit=8', {
-    key: 'groupData',
-    baseURL: 'http://demonuxtapi.dishait.cn/pc',
-    headers: {
-      appid: 'bd9d01ecc75dbbaaefce'
-    },
-    // 响应之前数据处理
-    transform: (res) => {
-      return res.data
-    },
-    // 是否开启缓存
-    initialCache: false
+  const { data } = await useGroupDataApi({
+    page: 1,
+    usable: 1,
+    limit: 8
   })
 
   pdata.value = data.value?.rows ?? []

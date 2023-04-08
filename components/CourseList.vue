@@ -2,7 +2,7 @@
  * @Descripttion: 课程卡片
  * @Author: lwp
  * @Date: 2023-04-07 03:56:09
- * @LastEditTime: 2023-04-08 16:56:26
+ * @LastEditTime: 2023-04-09 00:55:01
 -->
 <template>
   <!-- 卡片 -->
@@ -28,7 +28,8 @@
     <!-- 卡片底部 -->
     <!-- "item.group_id || item.flashsale_id" 判断秒杀或拼团 -->
     <template #footer v-if="item.group_id || item.flashsale_id">
-      <!-- 配置底部圆角rounded-b -->
+    <ClientOnly>
+    <!-- 配置底部圆角rounded-b -->
       <div class="bg-yellow-500 text-white p-3 text-xs flex items-center rounded-b">
         {{ item.group_id ? '拼团中' : '秒杀中' }}
         <div class="ml-auto flex items-center">
@@ -36,6 +37,7 @@
           <CountDown :time="item.end_time" />
         </div>
       </div>
+    </ClientOnly>
     </template>
   </n-card>
 </template>

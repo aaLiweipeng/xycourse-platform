@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-02 00:14:09
- * @LastEditTime: 2023-04-08 21:57:02
+ * @LastEditTime: 2023-04-08 23:04:40
 -->
 <template>
   <div>
@@ -26,7 +26,6 @@
 </template>
 
 <script setup>
-
 useHead({
   title: '呵呵编程首页',
   meta: [
@@ -36,21 +35,12 @@ useHead({
 })
 
 // const { pending, data, refresh, error } = await useFetch('/index', {
-const { pending, data, error } = await useFetch('/index', {
-  key: 'IndexData',
-  baseURL: 'http://demonuxtapi.dishait.cn/pc',
-  headers: {
-    appid: 'bd9d01ecc75dbbaaefce'
-  },
-  // 响应之前数据处理
-  transform: (res) => {
-    return res.data
-  },
-  // 是否开启缓存
-  // initialCache:false,
-  // 懒加载
-  lazy: true
-})
+const {
+  pending,
+  data,
+  // refresh,
+  error
+} = await useIndexDataApi()
 
 // 服务端时直接报错
 // if(process.server && error.value){
