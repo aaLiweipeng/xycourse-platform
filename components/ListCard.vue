@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-07 03:56:01
- * @LastEditTime: 2023-04-09 00:45:53
+ * @LastEditTime: 2023-04-09 02:36:36
 -->
 <template>
   <div>
@@ -16,7 +16,7 @@
     <n-grid x-gap="12" :cols="4" class="mb-6">
       <n-gi v-for="(item, index) in pdata" :key="index">
         <!-- 课程卡片 -->
-        <CourseList :item="item" />
+        <CourseListItem :item="item" />
       </n-gi>
     </n-grid>
   </div>
