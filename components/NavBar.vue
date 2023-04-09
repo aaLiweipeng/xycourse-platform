@@ -2,7 +2,7 @@
  * @Descripttion: 导航栏
  * @Author: lwp
  * @Date: 2023-04-02 17:04:01
- * @LastEditTime: 2023-04-05 03:40:22
+ * @LastEditTime: 2023-04-09 16:57:04
 -->
 <template>
   <div class="navbar">
@@ -28,7 +28,8 @@
       </ui-menu>
 
       <!-- 这里的marginLeft-auto 用的妙 -->
-      <n-button circle class="ml-auto mr-3">
+      <n-button circle class="ml-auto mr-3" @click="openSearch">
+        <!-- 搜索图标 -->
         <template #icon>
           <n-icon>
             <Search />
@@ -45,6 +46,9 @@
     </div>
   </div>
   <div class="w-[100%] h-[80px]"></div>
+
+  <!-- 搜索抽屉 -->
+  <SearchBar ref="SearchBarRef" />
 </template>
 
 <script setup>
@@ -177,6 +181,10 @@ const userOptions = [
     icon: renderIcon(LogoutIcon)
   }
 ]
+
+const SearchBarRef = ref(null)
+const openSearch = () => SearchBarRef.value.open()
+
 </script>
 
 <style>
