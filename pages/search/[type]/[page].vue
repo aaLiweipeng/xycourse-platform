@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Author: lwp
  * @Date: 2023-04-09 17:51:15
- * @LastEditTime: 2023-04-10 02:46:38
+ * @LastEditTime: 2023-04-10 04:02:39
 -->
 <template>
   <div>
@@ -15,15 +15,26 @@
         v-for="(item, index) in tabs"
         :key="index"
         @click="handleClick(item.value)"
-        >{{ item.label }}</UiTabItem
       >
+        {{ item.label }}
+      </UiTabItem>
     </UiTab>
+
+    <LoadingGroup :pending="pending" :error="error">
+      <n-grid :x-gap="20" :cols="4">
+        <n-gi v-for="(item, index) in rows" :key="index">
+          <CourseListItem :item="item" />
+        </n-gi>
+      </n-grid>
+    </LoadingGroup>
   </div>
 </template>
 
 <script setup>
+import { NGrid, NGi } from 'naive-ui'
 const route = useRoute()
-const title = ref(route.query.keyword) // 获取query参数关键词
+// const title = ref(route.query.keyword) // 获取query参数关键词
+const title = computed(() => route.query.keyword) // 获取query参数关键词
 const type = ref(route.params.type)
 
 // 关键词设置到标题上
@@ -52,6 +63,34 @@ const handleClick = (t) => {
     }
   })
 }
+
+const page = ref(parseInt(route.params.page))
+// const { data, pending, error, refresh } = await useSearchListApi({
+let { data } = await useSearchListApi({
+  page: page.value,
+  keyword: encodeURIComponent(title.value),
+  type: type.value
+})
+
+// 搜索触发 keyword改动，通过computed 进而触发title改动
+// title改动，通过此 watch，触发数据重新请求，
+// 不然在搜索结果页使用搜索框，不会刷新页面结果数据！
+watch(
+  title, // 监听对象
+  async () => {
+    const result = await useSearchListApi({
+      page: page.value,
+      keyword: encodeURIComponent(title.value),
+      type: type.value
+    })
+    data = result?.data
+  },
+  {
+    immediate: true
+  }
+)
+
+const rows = computed(() => data.value?.rows ?? [])
 
 definePageMeta({
   middleware: ['search']
