@@ -2,7 +2,7 @@
  * @Descripttion: 课程卡片
  * @Author: lwp
  * @Date: 2023-04-07 03:56:09
- * @LastEditTime: 2023-04-09 00:55:01
+ * @LastEditTime: 2023-04-13 03:56:29
 -->
 <template>
   <!-- 卡片 -->
@@ -10,7 +10,8 @@
   <n-card class="cursor-pointer mb-5 shadow-md !border-0" footer-style="padding:0;">
     <!-- 封面 -->
     <template #cover>
-      <img :src="item.cover" class="w-[100%] h-[150px]" />
+      <!-- <img :src="item.cover" class="w-[100%] h-[150px]" /> -->
+      <UiImage :src="item.cover" class="w-[100%] h-[150px]"/>
     </template>
 
     <!-- 卡片底部文本 -->
