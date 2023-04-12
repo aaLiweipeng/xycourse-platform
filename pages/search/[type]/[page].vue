@@ -1,8 +1,8 @@
 <!--
- * @Descripttion:
+ * @Descripttion: 搜索结果页
  * @Author: lwp
  * @Date: 2023-04-09 17:51:15
- * @LastEditTime: 2023-04-10 04:02:39
+ * @LastEditTime: 2023-04-13 04:26:40
 -->
 <template>
   <div>
@@ -20,18 +20,28 @@
       </UiTabItem>
     </UiTab>
 
+    <!-- 结果页加载态、错误态、正文区 -->
     <LoadingGroup :pending="pending" :error="error">
       <n-grid :x-gap="20" :cols="4">
         <n-gi v-for="(item, index) in rows" :key="index">
           <CourseListItem :item="item" />
         </n-gi>
       </n-grid>
+      <div class="flex justify-center items-center mt-5 mb-10">
+        <n-pagination
+          size="large"
+          :page="page"
+          :item-count="total"
+          :page-size="limit"
+          :on-update:page="handlePageChange"
+        />
+      </div>
     </LoadingGroup>
   </div>
 </template>
 
 <script setup>
-import { NGrid, NGi } from 'naive-ui'
+import { NGrid, NGi, NPagination } from 'naive-ui'
 const route = useRoute()
 // const title = ref(route.query.keyword) // 获取query参数关键词
 const title = computed(() => route.query.keyword) // 获取query参数关键词
@@ -64,7 +74,9 @@ const handleClick = (t) => {
   })
 }
 
-const page = ref(parseInt(route.params.page))
+const page = ref(parseInt(route.params.page)) // 分页：页码
+const limit = ref(10) // 分页：每页数量
+
 // const { data, pending, error, refresh } = await useSearchListApi({
 let { data } = await useSearchListApi({
   page: page.value,
@@ -90,7 +102,22 @@ watch(
   }
 )
 
-const rows = computed(() => data.value?.rows ?? [])
+const rows = computed(() => data.value?.rows ?? []) // 接口返回的正文数据 默认值[]
+const total = computed(() => data.value?.count ?? 0) // 分页：数据总数 默认值0
+
+// 分页器 切换分页时回调；
+// 此时这里跳转新的page路由; 页面刷新, page ref值由此改变; 绑定page的np组件UI也改变了
+const handlePageChange = (p) => {
+  navigateTo({
+    params: {
+      ...route.params,
+      page: p
+    },
+    query: {
+      ...route.query
+    }
+  })
+}
 
 definePageMeta({
   middleware: ['search']
