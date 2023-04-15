@@ -2,7 +2,7 @@
  * @Descripttion: 搜索结果页
  * @Author: lwp
  * @Date: 2023-04-09 17:51:15
- * @LastEditTime: 2023-04-15 17:26:50
+ * @LastEditTime: 2023-04-15 22:36:43
 -->
 <template>
   <div>
@@ -74,41 +74,77 @@ const handleClick = (t) => {
   })
 }
 
-const page = ref(parseInt(route.params.page)) // 分页：页码
-const limit = ref(10) // 分页：每页数量
+// 页面数据请求、分页请求 Start ---------  后面这部分装起来了 --> usePage
+// const page = ref(parseInt(route.params.page)) // 分页：页码
+// const limit = ref(10) // 分页：每页数量
 
-// const { data, pending, error, refresh } = await useSearchListApi({
+// // const { data, pending, error, refresh } = await useSearchListApi({
+// const {
+//   data,
+//   pending,
+//   error,
+//   refresh
+// } = await useSearchListApi(() => {
+//   return {
+//     page: page.value,
+//     keyword: encodeURIComponent(title.value),
+//     type: type.value
+//   }
+// })
+
+// // 【旧方案】
+// // 搜索触发 keyword改动，通过computed 进而触发title改动
+// // title改动，通过此 watch，触发数据重新请求，
+// // 不然在搜索结果页使用搜索框，不会刷新页面结果数据！
+// // watch(
+// //   title, // 监听对象
+// //   async () => {
+// //     const result = await useSearchListApi({
+// //       page: page.value,
+// //       keyword: encodeURIComponent(title.value),
+// //       type: type.value
+// //     })
+// //     data = result?.data
+// //   },
+// //   {
+// //     immediate: true
+// //   }
+// // )
+//
+// const rows = computed(() => data.value?.rows ?? []) // 接口返回的正文数据 默认值[]
+// const total = computed(() => data.value?.count ?? 0) // 分页：数据总数 默认值0
+
+// // 分页器 切换分页时回调；
+// // 此时这里跳转新的page路由; 页面刷新, page ref值由此改变; 绑定page的np组件UI也改变了
+// const handlePageChange = (p) => {
+//   navigateTo({
+//     params: {
+//       ...route.params,
+//       page: p
+//     },
+//     query: {
+//       ...route.query
+//     }
+//   })
+// }
+//  End ---------
+
 const {
-  data,
+  page,
+  limit,
+  total,
+  handlePageChange,
+  rows,
   pending,
   error,
   refresh
-} = await useSearchListApi(() => {
+} = await usePage(({ page, limit }) => useSearchListApi(() => {
   return {
-    page: page.value,
+    page,
     keyword: encodeURIComponent(title.value),
     type: type.value
   }
-})
-
-// 【旧方案】
-// 搜索触发 keyword改动，通过computed 进而触发title改动
-// title改动，通过此 watch，触发数据重新请求，
-// 不然在搜索结果页使用搜索框，不会刷新页面结果数据！
-// watch(
-//   title, // 监听对象
-//   async () => {
-//     const result = await useSearchListApi({
-//       page: page.value,
-//       keyword: encodeURIComponent(title.value),
-//       type: type.value
-//     })
-//     data = result?.data
-//   },
-//   {
-//     immediate: true
-//   }
-// )
+}))
 
 // 新方案
 const stop = watch(() => route.query.keyword, (newVal) => {
@@ -117,23 +153,6 @@ const stop = watch(() => route.query.keyword, (newVal) => {
 })
 
 onBeforeUnmount(() => stop())
-
-const rows = computed(() => data.value?.rows ?? []) // 接口返回的正文数据 默认值[]
-const total = computed(() => data.value?.count ?? 0) // 分页：数据总数 默认值0
-
-// 分页器 切换分页时回调；
-// 此时这里跳转新的page路由; 页面刷新, page ref值由此改变; 绑定page的np组件UI也改变了
-const handlePageChange = (p) => {
-  navigateTo({
-    params: {
-      ...route.params,
-      page: p
-    },
-    query: {
-      ...route.query
-    }
-  })
-}
 
 definePageMeta({
   middleware: ['search']
