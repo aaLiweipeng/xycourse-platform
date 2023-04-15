@@ -2,12 +2,14 @@
  * @Descripttion: 全局页面加载组件封装
  * @Author: lwp
  * @Date: 2023-04-09 02:25:38
- * @LastEditTime: 2023-04-09 04:02:27
+ * @LastEditTime: 2023-04-16 00:11:40
 -->
 <template>
   <div>
     <template v-if="loading">
-      <LoadingSkeleton />
+      <slot name="loading">
+        <LoadingSkeleton />
+      </slot>
     </template>
 
     <template v-else-if="error">
@@ -41,7 +43,8 @@ const props = defineProps({
 
 const loading = ref(false) // loading骨架加载组件的开关
 const stop = watchEffect(() => {
-  if (props.pending && !loading.value) { // 如果页面加载中（pending）且 loading为空
+  if (props.pending && !loading.value) {
+    // 如果页面加载中（pending）且 loading为空
     loading.value = true
   } else {
     setTimeout(() => {

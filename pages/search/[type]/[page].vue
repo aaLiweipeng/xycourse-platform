@@ -2,7 +2,7 @@
  * @Descripttion: 搜索结果页
  * @Author: lwp
  * @Date: 2023-04-09 17:51:15
- * @LastEditTime: 2023-04-15 22:36:43
+ * @LastEditTime: 2023-04-16 01:11:03
 -->
 <template>
   <div>
@@ -22,6 +22,9 @@
 
     <!-- 结果页加载态、错误态、正文区 -->
     <LoadingGroup :pending="pending" :error="error">
+      <template #loading>
+        <LoadingCourseSkeleton/>
+      </template>
       <n-grid :x-gap="20" :cols="4">
         <n-gi v-for="(item, index) in rows" :key="index">
           <CourseListItem :item="item" />
