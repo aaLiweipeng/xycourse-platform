@@ -1,8 +1,8 @@
 /*
- * @Descripttion:
+ * @Descripttion: useFetch的封装
  * @Author: lwp
  * @Date: 2023-04-08 22:20:15
- * @LastEditTime: 2023-04-08 22:42:59
+ * @LastEditTime: 2023-04-15 17:30:43
  */
 const fetchConfig = {
   baseURL: 'http://demonuxtapi.dishait.cn/pc',

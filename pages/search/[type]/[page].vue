@@ -2,7 +2,7 @@
  * @Descripttion: 搜索结果页
  * @Author: lwp
  * @Date: 2023-04-09 17:51:15
- * @LastEditTime: 2023-04-13 04:26:40
+ * @LastEditTime: 2023-04-15 17:26:50
 -->
 <template>
   <div>
@@ -43,8 +43,8 @@
 <script setup>
 import { NGrid, NGi, NPagination } from 'naive-ui'
 const route = useRoute()
-// const title = ref(route.query.keyword) // 获取query参数关键词
-const title = computed(() => route.query.keyword) // 获取query参数关键词
+const title = ref(route.query.keyword) // 获取query参数关键词
+// const title = computed(() => route.query.keyword) // 获取query参数关键词
 const type = ref(route.params.type)
 
 // 关键词设置到标题上
@@ -78,29 +78,45 @@ const page = ref(parseInt(route.params.page)) // 分页：页码
 const limit = ref(10) // 分页：每页数量
 
 // const { data, pending, error, refresh } = await useSearchListApi({
-let { data } = await useSearchListApi({
-  page: page.value,
-  keyword: encodeURIComponent(title.value),
-  type: type.value
+const {
+  data,
+  pending,
+  error,
+  refresh
+} = await useSearchListApi(() => {
+  return {
+    page: page.value,
+    keyword: encodeURIComponent(title.value),
+    type: type.value
+  }
 })
 
+// 【旧方案】
 // 搜索触发 keyword改动，通过computed 进而触发title改动
 // title改动，通过此 watch，触发数据重新请求，
 // 不然在搜索结果页使用搜索框，不会刷新页面结果数据！
-watch(
-  title, // 监听对象
-  async () => {
-    const result = await useSearchListApi({
-      page: page.value,
-      keyword: encodeURIComponent(title.value),
-      type: type.value
-    })
-    data = result?.data
-  },
-  {
-    immediate: true
-  }
-)
+// watch(
+//   title, // 监听对象
+//   async () => {
+//     const result = await useSearchListApi({
+//       page: page.value,
+//       keyword: encodeURIComponent(title.value),
+//       type: type.value
+//     })
+//     data = result?.data
+//   },
+//   {
+//     immediate: true
+//   }
+// )
+
+// 新方案
+const stop = watch(() => route.query.keyword, (newVal) => {
+  title.value = newVal
+  refresh()
+})
+
+onBeforeUnmount(() => stop())
 
 const rows = computed(() => data.value?.rows ?? []) // 接口返回的正文数据 默认值[]
 const total = computed(() => data.value?.count ?? 0) // 分页：数据总数 默认值0
